@@ -11,7 +11,7 @@ public class Driver {
 		final DiffusionGUI diffGui = new DiffusionGUI();
 		
 		if (args[0] == "-i") {
-			@SuppressWarnings("resource")
+//			@SuppressWarnings("resource")
 			Scanner scanner = new Scanner(System.in);
 			System.out.println("Please enter a seed value:");
 			seed = scanner.nextInt();
