@@ -38,8 +38,8 @@ public class Grids {
 	public void initializeGrids(Chemical[][] grid1, Chemical[][] grid2) {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				double r1 = rand.nextInt(10000) / 10000, 
-						r2 = rand.nextInt(10000) / 10000;
+				double r1 = rand.nextDouble(), 
+						r2 = rand.nextDouble();
 				grid1[i][j] = new Chemical(new URate(), r1);
 				grid2[i][j] = new Chemical(new VRate(), r2);
 			}

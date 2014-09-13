@@ -26,6 +26,7 @@ public class Driver {
 		} 
 		
 		javax.swing.SwingUtilities.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				diffGui.createAndShowGUI();
 			}
