@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class Driver {
 
-	public static int seed;
+	public static int seed = 0, steps = 10000;
 	public static double ru = 0.16, rv = 0.08, f = 0.035, k = 0.065;
 
 	public static void main(String[] args) {

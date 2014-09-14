@@ -18,12 +18,11 @@ public class UPanel extends ChemicalPanel {
 		Chemical[][] uGrid = grids.getGrid(true);
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				double d = uGrid[i][j].getComposition();
-				if (i == width / 2 && j == height / 2)
-					System.out.println("U[" + i + "]" + "[" + j
-							+ "] at timestep " + counter + " is: " + d);
-				int colUpdate = (int) (50 * Math.abs(d));
-				Color color = new Color(30, colUpdate % 255, 125);
+				double d = Math.abs(uGrid[i][j].getComposition());
+//				if (i == width / 2 && j == height / 2)
+//					System.out.println("U[" + i + "]" + "[" + j
+//							+ "] at timestep " + counter + " is: " + d);
+				Color color = new Color(30, ((int) (255 - d * 135)), 125);
 				g.setColor(color);
 				g.drawRect(i, j, i, j);
 			}

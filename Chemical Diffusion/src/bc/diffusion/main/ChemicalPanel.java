@@ -24,7 +24,7 @@ public abstract class ChemicalPanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if(grids.getLock() == false) {
+		if(!grids.getLock()) {
 			grids.gridTransition();
 			grids.update();
 			grids.setLock(true);
@@ -33,7 +33,7 @@ public abstract class ChemicalPanel extends JPanel {
 		}
 			
 		refreshPanel(g);
-		if(counter >= 10000)
+		if(counter >= Driver.steps)
 			System.out.println("Max steps reached");
 		counter++;
 	}
