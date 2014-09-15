@@ -76,7 +76,7 @@ public class Grids {
 		}
 		uGridData[step / 100] = uSum / ((double) area);
 		vGridData[step / 100] = vSum / ((double) area);
-//		System.out.println(uGridData[step / 100] + ", " + vGridData[step / 100]);
+		System.out.println(uGridData[step / 100] + ", " + vGridData[step / 100]);
 	}
 
 	public void update() {
