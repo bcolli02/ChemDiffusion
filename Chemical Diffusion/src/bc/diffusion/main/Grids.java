@@ -11,6 +11,7 @@ public class Grids {
 	private Random rand;
 	private boolean lock;
 	private int width, height;
+	private double[] uGridData, vGridData;
 	private Chemical[][] uGrid, vGrid;
 
 	public Grids(int width, int height) {
@@ -20,11 +21,17 @@ public class Grids {
 		this.height = height;
 		uGrid = new Chemical[width][height];
 		vGrid = new Chemical[width][height];
+		uGridData = new double[Driver.steps / 100];
+		vGridData = new double[Driver.steps / 100];
 		initializeGrids(uGrid, vGrid);
 	}
 
 	public Chemical[][] getGrid(boolean b) {
 		return b ? uGrid : vGrid;
+	}
+	
+	public double[] getGridData(boolean b) {
+		return b ? uGridData : vGridData;
 	}
 
 	public void setLock(boolean b) {
@@ -38,8 +45,7 @@ public class Grids {
 	public void initializeGrids(Chemical[][] grid1, Chemical[][] grid2) {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				double r1 = rand.nextInt(10000) / 10000, 
-						r2 = rand.nextInt(10000) / 10000;
+				double r1 = rand.nextDouble(), r2 = rand.nextDouble();
 				grid1[i][j] = new Chemical(new URate(), r1);
 				grid2[i][j] = new Chemical(new VRate(), r2);
 			}
@@ -57,6 +63,20 @@ public class Grids {
 				vGrid[i][j].transition(vData, uGrid[i][j].getComposition());
 			}
 		}
+	}
+
+	public void collectGridData(int step) {
+		double uSum = 0.0, vSum = 0.0;
+		double area = width * height;
+		for(int i = 0; i < width; i++) {
+			for(int j = 0; j < height; j++) {
+				uSum += uGrid[i][j].getComposition();
+				vSum += vGrid[i][j].getComposition();
+			}
+		}
+		uGridData[step / 100] = uSum / ((double) area);
+		vGridData[step / 100] = vSum / ((double) area);
+//		System.out.println(uGridData[step / 100] + ", " + vGridData[step / 100]);
 	}
 
 	public void update() {

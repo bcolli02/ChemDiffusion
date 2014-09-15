@@ -18,12 +18,11 @@ public class VPanel extends ChemicalPanel {
 		Chemical[][] vGrid = grids.getGrid(false);
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				double d = vGrid[i][j].getComposition();
-				if (i == width / 2 && j == height / 2)
-					System.out.println("V[" + i + "]" + "[" + j
-							+ "] at timestep " + counter + " is: " + d);
-				int colUpdate = (int) (50 * Math.abs(d));
-				Color color = new Color(30, 125, colUpdate % 255);
+				double d = Math.abs(vGrid[i][j].getComposition());
+//				if (i == width / 2 && j == height / 2)
+//					System.out.println("V[" + i + "]" + "[" + j
+//							+ "] at timestep " + counter + " is: " + d);
+				Color color = new Color(((int)(200 - d * 50)), ((int)(220 - d * 100)), 135);
 				g.setColor(color);
 				g.drawRect(i, j, i, j);
 			}
