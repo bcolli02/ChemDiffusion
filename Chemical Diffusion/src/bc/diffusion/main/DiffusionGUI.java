@@ -33,8 +33,8 @@ public class DiffusionGUI extends JFrame implements ActionListener {
 	    topPanel.setLayout( new BorderLayout() );
 	    getContentPane().add( topPanel );
 	    
-	    screenSize.width = 600;
-	    screenSize.height = 600;
+	    screenSize.width = 900;
+	    screenSize.height = 900;
 	    
 	    int panelWidth = screenSize.width / 2;
 	    int panelHeight = screenSize.height / 2;

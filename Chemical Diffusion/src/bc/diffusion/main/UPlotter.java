@@ -20,8 +20,7 @@ public class UPlotter extends Plotter {
 			double h1 = lift - (gridData[i] * maxHeight), h2 = lift
 					- (gridData[i + 1] * maxHeight);
 			g.setColor(Color.blue);
-			g.drawLine(i * length + ((int) (width - lift)), (int) h1, (i + 1)
-					* length + ((int) (width - lift)), (int) h2);
+			g.drawLine(i * length + 80, (int) h1, (i + 1) * length + 80, (int) h2);
 		}
 	}
 }
