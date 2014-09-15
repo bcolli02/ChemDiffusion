@@ -5,13 +5,13 @@ import java.util.Scanner;
 public class Driver {
 
 	public static int seed = 0, steps = 10000;
-	public static double ru = 0.16, rv = 0.08, f = 0.035, k = 0.065;
+	public static double ru = 0.19, rv = 0.05, f = 0.06, k = 0.062;
 
 	public static void main(String[] args) {
 		final DiffusionGUI diffGui = new DiffusionGUI();
 		
 		if (args[0] == "-i") {
-			@SuppressWarnings("resource")
+//			@SuppressWarnings("resource")
 			Scanner scanner = new Scanner(System.in);
 			System.out.println("Please enter a seed value:");
 			seed = scanner.nextInt();

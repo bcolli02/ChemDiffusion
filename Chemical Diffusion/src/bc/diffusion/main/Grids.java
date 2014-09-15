@@ -45,9 +45,12 @@ public class Grids {
 	public void initializeGrids(Chemical[][] grid1, Chemical[][] grid2) {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				double r1 = rand.nextDouble(), r2 = rand.nextDouble();
-				grid1[i][j] = new Chemical(new URate(), r1);
-				grid2[i][j] = new Chemical(new VRate(), r2);
+				double dw = ((i - width / 2) * (i - width / 2)) / 2; 
+				double dl = ((j - height / 2) * (j - height / 2)) / 2; 
+				double in = Math.exp(-1 * (dw + dl));
+				//double r1 = rand.nextDouble(), r2 = rand.nextDouble();
+				grid1[i][j] = new Chemical(new URate(), 1 - in);
+				grid2[i][j] = new Chemical(new VRate(), in);
 			}
 		}
 	}
@@ -76,7 +79,7 @@ public class Grids {
 		}
 		uGridData[step / 100] = uSum / ((double) area);
 		vGridData[step / 100] = vSum / ((double) area);
-//		System.out.println(uGridData[step / 100] + ", " + vGridData[step / 100]);
+		System.out.println(uGridData[step / 100] + ", " + vGridData[step / 100]);
 	}
 
 	public void update() {
