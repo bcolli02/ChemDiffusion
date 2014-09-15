@@ -13,17 +13,14 @@ public class VPlotter extends Plotter {
 
 	@Override
 	public void refreshGraph(Graphics g, int t) {
-		int count = t / 100;
+		double lift = 0.83333 * height, maxHeight = 0.66667 * height;
+		int count = t / 100, length = width / 100;
 		double[] gridData = grids.getGridData(false);
-		g.setColor(Color.white);
-		g.fillRect(0, 0, width, height);
 		for (int i = 0; i < count; i++) {
-			double h1 = height - (gridData[i] * 0.5 * height) + 50, h2 = height
-					- (gridData[i + 1] * 0.5 * height) + 50;
-			g.setColor(Color.black);
-			g.drawLine(i * count + 40, (int) h1, (i + 1) * count + 40, (int) h2);
-			if (t % 100 == 0)
-				System.out.println("Collective v data: " + h2);
+			double h1 = lift - (gridData[i] * maxHeight), h2 = lift
+					- (gridData[i + 1] * maxHeight);
+			g.setColor(Color.blue);
+			g.drawLine(i * length + 80, (int) h1, (i + 1) * length + 80, (int) h2);
 		}
 	}
 }
