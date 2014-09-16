@@ -1,16 +1,20 @@
 package bc.diffusion.main;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 
 import javax.swing.JPanel;
 
-public abstract class ChemicalPanel extends JPanel {
+import bc.diffusion.chemicals.Chemical;
+
+public class ChemicalPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	public int width, height, counter = 0;
-	public Grids grids;
+	private int width, height, counter = 0;
+	private boolean complete = false;
+	private Grids grids;
 
 	public ChemicalPanel(Grids grids, int width, int height) {
 		this.grids = grids;
@@ -24,19 +28,29 @@ public abstract class ChemicalPanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if(!grids.getLock()) {
+		if (counter < Driver.steps) {
 			grids.gridTransition();
 			grids.update();
 			grids.setLock(true);
-		} else {
-			grids.setLock(false);
 		}
-			
 		refreshPanel(g);
-		if(counter >= Driver.steps)
-			System.out.println("Max steps reached");
 		counter++;
 	}
 
-	public abstract void refreshPanel(Graphics g);
+	public void refreshPanel(Graphics g) {
+		Chemical[][] uGrid = grids.getGrid(true);
+		Chemical[][] vGrid = grids.getGrid(false);
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
+				double ug = Math.abs(uGrid[i][j].getComposition());
+				double vg = Math.abs(vGrid[i][j].getComposition());
+				int inCo = (int) (1000 * ug * vg);
+				Color color = new Color(255 - inCo, 255 - inCo / 2,
+						255 - inCo / 4);
+				g.setColor(color);
+				g.fillRect(i * Driver.scale, j * Driver.scale, (i + 1)
+						* Driver.scale, (j + 1) * Driver.scale);
+			}
+		}
+	}
 }
