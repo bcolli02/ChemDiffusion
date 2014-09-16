@@ -27,8 +27,10 @@ public abstract class Plotter extends JPanel {
 			grids.collectGridData(timeStep);
 		if (timeStep < 10000)
 			refreshGraph(g, timeStep);
-		else
+		else {
+			refreshGraph(g, 9999);
 			System.out.println("Max Steps reached.");
+		}
 		timeStep++;
 	}
 

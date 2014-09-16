@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Driver {
 
 	public static int seed = 0, steps = 10000;
-	public static double ru = 0.19, rv = 0.05, f = 0.06, k = 0.062;
+	public static double ru = 0.16, rv = 0.08, f = 0.02, k = 0.055;
 
 	public static void main(String[] args) {
 		final DiffusionGUI diffGui = new DiffusionGUI();
