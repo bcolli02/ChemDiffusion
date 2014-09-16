@@ -45,8 +45,8 @@ public class Grids {
 	public void initializeGrids(Chemical[][] grid1, Chemical[][] grid2) {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				double dw = ((i - width * 0.5) * (i - width * 0.5)) * 0.5; 
-				double dl = ((j - height * 0.5) * (j - height * 0.5)) * 0.5; 
+				double dw = ((i - width * 0.5) * (i - width * 0.5)) * 0.125; 
+				double dl = ((j - height * 0.5) * (j - height * 0.5)) * 0.125; 
 				double in = Math.exp(-1 * (dw + dl));
 				//double r1 = rand.nextDouble(), r2 = rand.nextDouble();
 				grid1[i][j] = new Chemical(new URate(), 1 - in);
