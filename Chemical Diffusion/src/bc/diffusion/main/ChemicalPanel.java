@@ -13,7 +13,6 @@ public class ChemicalPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private int width, height, counter = 0;
-	private boolean complete = false;
 	private Grids grids;
 
 	public ChemicalPanel(Grids grids, int width, int height) {
