@@ -12,8 +12,7 @@ import bc.diffusion.chemicals.Chemical;
 public class ChemicalPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
-	private int width, height, counter = 0;
-	private boolean complete = false;
+	private int width, height;
 	private Grids grids;
 
 	public ChemicalPanel(Grids grids, int width, int height) {
@@ -28,13 +27,14 @@ public class ChemicalPanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (counter < Driver.steps) {
-			grids.gridTransition();
-			grids.update();
+		if (grids.counter <= Driver.steps) {
+			for (int i = 0; i < 20 / Driver.scale; i++) {
+				grids.gridTransition();
+				grids.update();
+			}
 			grids.setLock(true);
 		}
 		refreshPanel(g);
-		counter++;
 	}
 
 	public void refreshPanel(Graphics g) {
@@ -48,7 +48,7 @@ public class ChemicalPanel extends JPanel {
 				Color color = new Color(255 - inCo, 255 - inCo / 2,
 						255 - inCo / 4);
 				g.setColor(color);
-				g.fillRect(i * Driver.scale, j * Driver.scale, (i + 1)
+				g.drawRect(i * Driver.scale, j * Driver.scale, (i + 1)
 						* Driver.scale, (j + 1) * Driver.scale);
 			}
 		}

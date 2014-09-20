@@ -1,24 +1,22 @@
 package bc.diffusion.main;
 
-import java.util.Random;
-
 import bc.diffusion.chemicals.Chemical;
 import bc.diffusion.equations.URate;
 import bc.diffusion.equations.VRate;
 
 public class Grids {
 
-	private Random rand;
+	public int counter;
 	private boolean lock;
 	private int width, height;
 	private double[] uGridData, vGridData;
 	private Chemical[][] uGrid, vGrid;
 
 	public Grids(int width, int height) {
-		rand = new Random(Driver.seed);
 		this.lock = false;
 		this.width = width;
 		this.height = height;
+		this.counter = 0;
 		uGrid = new Chemical[width][height];
 		vGrid = new Chemical[width][height];
 		uGridData = new double[Driver.steps / 100];
@@ -29,7 +27,7 @@ public class Grids {
 	public Chemical[][] getGrid(boolean b) {
 		return b ? uGrid : vGrid;
 	}
-	
+
 	public double[] getGridData(boolean b) {
 		return b ? uGridData : vGridData;
 	}
@@ -45,12 +43,18 @@ public class Grids {
 	public void initializeGrids(Chemical[][] grid1, Chemical[][] grid2) {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				double dw = ((i - width * 0.5) * (i - width * 0.5)) * 0.125; 
-				double dl = ((j - height * 0.5) * (j - height * 0.5)) * 0.125; 
+				double dw = ((i - width * 0.5) * (i - width * 0.5)) * 0.5;
+				double dl = ((j - height * 0.5) * (j - height * 0.5)) * 0.5;
 				double in = Math.exp(-1 * (dw + dl));
-				//double r1 = rand.nextDouble(), r2 = rand.nextDouble();
-				grid1[i][j] = new Chemical(new URate(), 1 - in);
-				grid2[i][j] = new Chemical(new VRate(), in);
+
+				double di = i - width * 0.5;
+				double dj = j - height * 0.5;
+				double cos1 = (Math.cos((width / 2 + di) / 8) + 1) * 0.5;
+				double cos2 = (Math.cos((height / 2 + dj) / 8) + 1) * 0.5;
+				double exp = Math.exp(-1 / (Math.abs(di) + Math.abs(dj)));
+				double expcoco = cos1 * cos2 * exp;
+				grid1[i][j] = new Chemical(new URate(), 1 - expcoco);
+				grid2[i][j] = new Chemical(new VRate(), expcoco);
 			}
 		}
 	}
@@ -68,17 +72,17 @@ public class Grids {
 		}
 	}
 
-	public void collectGridData(int step) {
+	public void collectGridData() {
 		double uSum = 0.0, vSum = 0.0;
 		double area = width * height;
-		for(int i = 0; i < width; i++) {
-			for(int j = 0; j < height; j++) {
+		for (int i = 0; i < width; i++) {
+			for (int j = 0; j < height; j++) {
 				uSum += uGrid[i][j].getComposition();
 				vSum += vGrid[i][j].getComposition();
 			}
 		}
-		uGridData[step / 100] = uSum / ((double) area);
-		vGridData[step / 100] = vSum / ((double) area);
+		uGridData[counter / 100] = uSum / ((double) area);
+		vGridData[counter / 100] = vSum / ((double) area);
 	}
 
 	public void update() {
@@ -89,6 +93,7 @@ public class Grids {
 				vGrid[i][j].update();
 			}
 		}
+		counter++;
 	}
 
 	public double collectNeighborData(int x, int y, boolean b) {

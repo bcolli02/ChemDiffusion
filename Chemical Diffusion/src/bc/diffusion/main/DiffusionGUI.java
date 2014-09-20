@@ -53,8 +53,7 @@ public class DiffusionGUI extends JFrame implements ActionListener {
 		chemPanel = new ChemicalPanel(grids, panelWidth / Driver.scale, panelHeight / Driver.scale);
 		chemPanel.add(new JLabel("Diffusion of Chemicals"), BorderLayout.NORTH);
 		
-		screenSize.width += 10;
-		screenSize.height += 10;
+		screenSize.width *= 1.15;
 
 		plotter = new Plotter(grids, panelWidth, panelHeight);
 		plotter.add(new JLabel("Diffusion Plot of Chemicals"),
@@ -85,7 +84,7 @@ public class DiffusionGUI extends JFrame implements ActionListener {
 		this.setPreferredSize(screenSize);
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.pack();
-		this.setResizable(false);
+		this.setResizable(true);
 		this.setVisible(true);
 	}
 
