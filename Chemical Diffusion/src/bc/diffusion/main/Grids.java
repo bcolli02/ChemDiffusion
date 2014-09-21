@@ -36,7 +36,7 @@ public class Grids {
 		vGridData = new double[Driver.steps / 100];
 		initializeGrids(uGrid, vGrid);
 	}
-	
+
 	public Chemical[][] getGrid(boolean b) {
 		return b ? uGrid : vGrid;
 	}
@@ -61,11 +61,13 @@ public class Grids {
 				double cos1 = (Math.cos((width / 2 + di) / 8) + 1) * 0.5;
 				double cos2 = (Math.cos((height / 2 + dj) / 8) + 1) * 0.5;
 				double expcoco = cos1 * cos2;
-				
-				double mid = (rand.nextInt(10000) - 1 <= 0) ? 1.0 : 0.0;
-				
+
+				double mid = (rand.nextInt(width * height / 8) - 1 <= 0) ? 1.0
+						: 0.0;
+
 				grid1[i][j] = new Chemical(new URate(), 1.0);
-				grid2[i][j] = new Chemical(new VRate(), Driver.random ? mid : expcoco);
+				grid2[i][j] = new Chemical(new VRate(), Driver.random ? mid
+						: expcoco);
 			}
 		}
 	}
