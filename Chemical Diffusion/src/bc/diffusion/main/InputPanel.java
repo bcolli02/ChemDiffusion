@@ -79,16 +79,16 @@ public class InputPanel extends JPanel implements ActionListener {
 		kLabel.setLabelFor(k);
 		k.addActionListener(this);
 		
-		panel.add(uRate);
 		panel.add(uLabel);
-		panel.add(vRate);
+		panel.add(uRate);
 		panel.add(vLabel);
-		panel.add(f);
+		panel.add(vRate);
 		panel.add(fLabel);
-		panel.add(k);
+		panel.add(f);
 		panel.add(kLabel);
+		panel.add(k);
 		
-		panel.setBackground(new Color(40, 185, 210));
+		panel.setBackground(new Color(235, 235, 235));
 		
 		return panel;
 	}

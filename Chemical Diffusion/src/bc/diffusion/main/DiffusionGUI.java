@@ -55,11 +55,13 @@ public class DiffusionGUI extends JFrame implements ActionListener {
 		chemPanel.add(new JLabel("Diffusion of Chemicals"), BorderLayout.NORTH);
 		
 		inputPanel = new InputPanel(grids);
+		inputPanel.setBackground(new Color(55, 185, 176));
 		
 		screenSize.width *= 1.5;
 		screenSize.height += 130;
 
 		plotter = new Plotter(grids, panelWidth, panelHeight);
+		plotter.setBackground(Color.white);
 		plotter.add(new JLabel("Diffusion Plot of Chemicals"),
 				BorderLayout.NORTH);
 	}

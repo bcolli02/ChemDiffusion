@@ -47,7 +47,7 @@ public class ChemicalPanel extends JPanel {
 				int inCo = (int) (1000 * ug * vg) % 256;
 				int uinCo = (int) (255 * ug) % 256;
 				int vinCo = (int) (255 * vg) % 256;
-				Color color = new Color(uinCo, 255 - vinCo, 255 - inCo);
+				Color color = new Color(vinCo, 255 - inCo, uinCo);
 				g.setColor(color);
 				g.drawRect(i * Driver.scale, j * Driver.scale, (i + 1)
 						* Driver.scale, (j + 1) * Driver.scale);
