@@ -27,13 +27,13 @@ public class ChemicalPanel extends JPanel {
 	@Override
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		if (grids.counter <= Driver.steps) {
+		if (grids.counter <= Driver.steps && !Driver.paused) {
 			for (int i = 0; i < 20 / Driver.scale; i++) {
 				grids.gridTransition();
 				grids.update();
 			}
-			grids.setLock(true);
 		}
+		grids.setLock(true);
 		refreshPanel(g);
 	}
 
@@ -44,9 +44,10 @@ public class ChemicalPanel extends JPanel {
 			for (int j = 0; j < height; j++) {
 				double ug = Math.abs(uGrid[i][j].getComposition());
 				double vg = Math.abs(vGrid[i][j].getComposition());
-				int inCo = (int) (1000 * ug * vg);
-				Color color = new Color(255 - inCo, 255 - inCo / 2,
-						255 - inCo / 4);
+				int inCo = (int) (1000 * ug * vg) % 256;
+				int uinCo = (int) (255 * ug) % 256;
+				int vinCo = (int) (255 * vg) % 256;
+				Color color = new Color(uinCo, 255 - vinCo, 255 - inCo);
 				g.setColor(color);
 				g.drawRect(i * Driver.scale, j * Driver.scale, (i + 1)
 						* Driver.scale, (j + 1) * Driver.scale);

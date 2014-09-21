@@ -23,7 +23,7 @@ public class Plotter extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		layGrid(g);
-		if (grids.getLock() && grids.counter % 100 == 0 && grids.counter < 10000)
+		if (grids.getLock() && grids.counter % 100 == 0 && grids.counter < Driver.steps)
 			grids.collectGridData();
 		if (grids.counter < Driver.steps)
 			refreshGraph(g, grids.counter);

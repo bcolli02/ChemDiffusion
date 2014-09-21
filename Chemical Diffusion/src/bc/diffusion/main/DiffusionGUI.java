@@ -19,7 +19,8 @@ public class DiffusionGUI extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 	private Timer timer;
 	private Grids grids;
-	private JSplitPane splitH;
+	private JSplitPane splitV, splitH;
+	private InputPanel inputPanel;
 	private ChemicalPanel chemPanel;
 	private Plotter plotter;
 	private Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -53,7 +54,10 @@ public class DiffusionGUI extends JFrame implements ActionListener {
 		chemPanel = new ChemicalPanel(grids, panelWidth / Driver.scale, panelHeight / Driver.scale);
 		chemPanel.add(new JLabel("Diffusion of Chemicals"), BorderLayout.NORTH);
 		
-		screenSize.width *= 1.15;
+		inputPanel = new InputPanel(grids);
+		
+		screenSize.width *= 1.5;
+		screenSize.height += 130;
 
 		plotter = new Plotter(grids, panelWidth, panelHeight);
 		plotter.add(new JLabel("Diffusion Plot of Chemicals"),
@@ -61,11 +65,19 @@ public class DiffusionGUI extends JFrame implements ActionListener {
 	}
 
 	public void setFrameComponents(JPanel top, int panelWidth, int panelHeight) {
+		splitV = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
+		splitV.setDividerLocation(panelHeight);
+		splitV.add(chemPanel);
+		splitV.add(inputPanel);
+
+		splitV.setLeftComponent(chemPanel);
+		splitV.setRightComponent(inputPanel);
+		
 		splitH = new JSplitPane(JSplitPane.HORIZONTAL_SPLIT);
 		splitH.setDividerLocation(panelWidth);
 		top.add(splitH);
 
-		splitH.setLeftComponent(chemPanel);
+		splitH.setLeftComponent(splitV);
 		splitH.setRightComponent(plotter);
 	}
 

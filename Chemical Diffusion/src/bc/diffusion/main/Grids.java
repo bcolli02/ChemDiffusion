@@ -1,5 +1,7 @@
 package bc.diffusion.main;
 
+import java.util.Random;
+
 import bc.diffusion.chemicals.Chemical;
 import bc.diffusion.equations.URate;
 import bc.diffusion.equations.VRate;
@@ -8,11 +10,13 @@ public class Grids {
 
 	public int counter;
 	private boolean lock;
+	private Random rand;
 	private int width, height;
 	private double[] uGridData, vGridData;
 	private Chemical[][] uGrid, vGrid;
 
 	public Grids(int width, int height) {
+		rand = new Random(Driver.seed);
 		this.lock = false;
 		this.width = width;
 		this.height = height;
@@ -24,6 +28,15 @@ public class Grids {
 		initializeGrids(uGrid, vGrid);
 	}
 
+	public void reset() {
+		counter = 0;
+		uGrid = new Chemical[width][height];
+		vGrid = new Chemical[width][height];
+		uGridData = new double[Driver.steps / 100];
+		vGridData = new double[Driver.steps / 100];
+		initializeGrids(uGrid, vGrid);
+	}
+	
 	public Chemical[][] getGrid(boolean b) {
 		return b ? uGrid : vGrid;
 	}
@@ -43,18 +56,21 @@ public class Grids {
 	public void initializeGrids(Chemical[][] grid1, Chemical[][] grid2) {
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				double dw = ((i - width * 0.5) * (i - width * 0.5)) * 0.5;
-				double dl = ((j - height * 0.5) * (j - height * 0.5)) * 0.5;
-				double in = Math.exp(-1 * (dw + dl));
-
+//				double dw = ((i - width * 0.5) * (i - width * 0.5)) * 0.5;
+//				double dl = ((j - height * 0.5) * (j - height * 0.5)) * 0.5;
+//				double in = Math.exp(-1 * (dw + dl));
+//
 				double di = i - width * 0.5;
 				double dj = j - height * 0.5;
 				double cos1 = (Math.cos((width / 2 + di) / 8) + 1) * 0.5;
 				double cos2 = (Math.cos((height / 2 + dj) / 8) + 1) * 0.5;
 				double exp = Math.exp(-1 / (Math.abs(di) + Math.abs(dj)));
 				double expcoco = cos1 * cos2 * exp;
-				grid1[i][j] = new Chemical(new URate(), 1 - expcoco);
-				grid2[i][j] = new Chemical(new VRate(), expcoco);
+				
+				double mid = (rand.nextInt(10000) - 1 <= 0) ? 1.0 : 0.0;
+				
+				grid1[i][j] = new Chemical(new URate(), 1.0);
+				grid2[i][j] = new Chemical(new VRate(), Driver.random ? mid : expcoco);
 			}
 		}
 	}
