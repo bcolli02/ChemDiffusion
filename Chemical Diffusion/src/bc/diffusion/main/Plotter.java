@@ -3,17 +3,20 @@ package bc.diffusion.main;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.Graphics;
+import java.text.DecimalFormat;
 
 import javax.swing.JPanel;
 
 public class Plotter extends JPanel {
 
 	private static final long serialVersionUID = 1L;
+	DecimalFormat df;
 	private Grids grids;
 	private boolean complete = false;
 	private int width, height;
 
 	public Plotter(Grids grids, int width, int height) {
+		df = new DecimalFormat("#0.####");
 		this.grids = grids;
 		this.width = width;
 		this.height = height;
@@ -23,7 +26,8 @@ public class Plotter extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		layGrid(g);
-		if (grids.getLock() && grids.counter % 100 == 0 && grids.counter < Driver.steps)
+		if (grids.getLock() && grids.counter % 100 == 0
+				&& grids.counter < Driver.steps)
 			grids.collectGridData();
 		if (grids.counter < Driver.steps)
 			refreshGraph(g, grids.counter);
@@ -54,28 +58,35 @@ public class Plotter extends JPanel {
 
 		g.setFont(new Font("Arial", Font.BOLD, 18));
 		g.setColor(Color.blue);
-		g.drawString("U", (int) lift + 15, (int) lift + 25);
+		g.drawString("U", (int) lift + 185, (int) lift + 25);
 		g.setColor(Color.red);
-		g.drawString("V", (int) lift + 35, (int) lift + 25);
+		g.drawString("V", (int) lift + 185, (int) lift + 45);
 	}
 
 	public void refreshGraph(Graphics g, int t) {
+		double uC = 0.0, vC = 0.0;
 		double lift = 0.83333 * height, maxHeight = 0.66667 * height;
 		int start = (int) (width - lift);
 		int count = t / 100, length = width / 100;
 		double[] uGridData = grids.getGridData(true);
 		double[] vGridData = grids.getGridData(false);
 		for (int i = 0; i < count; i++) {
+			uC = uGridData[i];
+			vC = vGridData[i];
 			double h1 = lift - (uGridData[i] * maxHeight), h2 = lift
 					- (uGridData[i + 1] * maxHeight), h3 = lift
 					- (vGridData[i] * maxHeight), h4 = lift
 					- (vGridData[i + 1] * maxHeight);
 			g.setColor(Color.blue);
-			g.drawLine(i * length + start, (int) h1, (i + 1) * length + start - 1,
-					(int) h2);
+			g.drawLine(i * length + start, (int) h1, (i + 1) * length + start
+					- 1, (int) h2);
 			g.setColor(Color.red);
-			g.drawLine(i * length + start, (int) h3, (i + 1) * length + start - 1,
-					(int) h4);
+			g.drawLine(i * length + start, (int) h3, (i + 1) * length + start
+					- 1, (int) h4);
 		}
+
+		g.setColor(Color.black);
+		g.drawString(df.format(uC), (int) (lift + 205), (int) (lift + 25));
+		g.drawString(df.format(vC), (int) (lift + 205), (int) (lift + 45));
 	}
 }
