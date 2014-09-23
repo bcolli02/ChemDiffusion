@@ -13,6 +13,7 @@ public class Grids {
 	private Random rand;
 	private int width, height;
 	private double[] uGridData, vGridData;
+	private int[] uConcs, vConcs;
 	private Chemical[][] uGrid, vGrid;
 
 	public Grids(int width, int height) {
@@ -43,6 +44,10 @@ public class Grids {
 
 	public double[] getGridData(boolean b) {
 		return b ? uGridData : vGridData;
+	}
+
+	public int[] getConcentrations(boolean b) {
+		return b ? uConcs : vConcs;
 	}
 
 	public void setLock(boolean b) {
@@ -86,12 +91,18 @@ public class Grids {
 	}
 
 	public void collectGridData() {
+		uConcs = new int[101];
+		vConcs = new int[101];
 		double uSum = 0.0, vSum = 0.0;
 		double area = width * height;
 		for (int i = 0; i < width; i++) {
 			for (int j = 0; j < height; j++) {
-				uSum += uGrid[i][j].getComposition();
-				vSum += vGrid[i][j].getComposition();
+				double uComp = uGrid[i][j].getComposition();
+				double vComp = vGrid[i][j].getComposition();
+				uConcs[(int) (uComp * 100)]++;
+				vConcs[(int) (vComp * 100)]++;
+				uSum += uComp;
+				vSum += vComp;
 			}
 		}
 		uGridData[counter / 100] = uSum / ((double) area);

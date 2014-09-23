@@ -41,9 +41,6 @@ public class Plotter extends JPanel {
 
 	public void layGrid(Graphics g) {
 		double lift = 0.83333 * height, maxHeight = 0.66667 * height;
-		// Filling drawing area
-		g.setColor(new Color(241, 240, 250));
-		g.fillRect(0, 0, 2 * width, 2 * height);
 		g.setColor(Color.black);
 		g.drawLine((int) (width - lift - 2), (int) lift + 2, (int) (width
 				- lift - 2), 0);
@@ -68,25 +65,71 @@ public class Plotter extends JPanel {
 		double lift = 0.83333 * height, maxHeight = 0.66667 * height;
 		int start = (int) (width - lift);
 		int count = t / 100, length = width / 100;
+
 		double[] uGridData = grids.getGridData(true);
 		double[] vGridData = grids.getGridData(false);
+		int[] uConcs = grids.getConcentrations(true);
+		int[] vConcs = grids.getConcentrations(false);
+
 		for (int i = 0; i < count; i++) {
 			uC = uGridData[i];
 			vC = vGridData[i];
-			double h1 = lift - (uGridData[i] * maxHeight), h2 = lift
-					- (uGridData[i + 1] * maxHeight), h3 = lift
-					- (vGridData[i] * maxHeight), h4 = lift
-					- (vGridData[i + 1] * maxHeight);
-			g.setColor(Color.blue);
-			g.drawLine(i * length + start, (int) h1, (i + 1) * length + start
-					- 1, (int) h2);
-			g.setColor(Color.red);
-			g.drawLine(i * length + start, (int) h3, (i + 1) * length + start
-					- 1, (int) h4);
+			if (Driver.toggle == 0) {
+				double h1 = lift - (uGridData[i] * maxHeight), h2 = lift
+						- (uGridData[i + 1] * maxHeight), h3 = lift
+						- (vGridData[i] * maxHeight), h4 = lift
+						- (vGridData[i + 1] * maxHeight);
+
+				g.setColor(Color.DARK_GRAY);
+				g.setFont(new Font("Arial", Font.BOLD, 16));
+				g.drawString("Average Chemical Concentrations", width / 2 + 75,
+						(int) (lift - maxHeight - 25));
+				g.setColor(Color.blue);
+				g.drawLine(i * length + start, (int) h1, (i + 1) * length
+						+ start - 1, (int) h2);
+				g.setColor(Color.red);
+				g.drawLine(i * length + start, (int) h3, (i + 1) * length
+						+ start - 1, (int) h4);
+			}
 		}
 
+		if (Driver.toggle == 1) {
+			for (int i = 0; i < 101; i++) {
+				double a = (double) (height * width);
+				double u = (double) uConcs[i] / a;
+				double h1 = lift - Driver.scale * Driver.scale * u * maxHeight;
+
+				g.setColor(Color.DARK_GRAY);
+				g.setFont(new Font("Arial", Font.BOLD, 16));
+				g.drawString("Chemical Distribution of U", width / 2 + 75,
+						(int) (lift - maxHeight - 25));
+
+				g.setColor(Color.blue);
+				g.drawRect(i * (length + 3) + start, (int) h1, length + 3,
+						(int) (lift - (h1 - 0.5)));
+			}
+		}
+		if (Driver.toggle == 2) {
+			for (int i = 0; i < 101; i++) {
+				double a = (double) (height * width);
+				double v = (double) vConcs[i] / a;
+				double h1 = lift - Driver.scale * Driver.scale * v * maxHeight;
+
+				g.setColor(Color.DARK_GRAY);
+				g.setFont(new Font("Arial", Font.BOLD, 16));
+				g.drawString("Chemical Distribution of V", width / 2 + 75,
+						(int) (lift - maxHeight - 25));
+
+				g.setColor(Color.red);
+				g.drawRect(i * (length + 3) + start, (int) h1, length + 3,
+						(int) (lift - (h1 - 0.5)));
+			}
+		}
+
+		g.setFont(new Font("Arial", Font.BOLD, 16));
+		g.setFont(new Font("Arial", Font.BOLD, 16));
 		g.setColor(Color.black);
-		g.drawString(df.format(uC), (int) (lift + 205), (int) (lift + 25));
-		g.drawString(df.format(vC), (int) (lift + 205), (int) (lift + 45));
+		g.drawString(df.format(uC), (int) (lift + 215), (int) (lift + 25));
+		g.drawString(df.format(vC), (int) (lift + 215), (int) (lift + 45));
 	}
 }

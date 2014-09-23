@@ -45,13 +45,15 @@ public class ChemicalPanel extends JPanel {
 				Color color;
 				double ug = Math.abs(uGrid[i][j].getComposition());
 				double vg = Math.abs(vGrid[i][j].getComposition());
-				int inCo = (int) (1000 * ug * vg) % 256;
+				int inCo = (int) (1000 * (ug * vg)) % 256;
 				int uinCo = (int) (255 * ug) % 256;
 				int vinCo = (int) (255 * vg) % 256;
-				if(Driver.toggle == 0)
-				color = new Color(vinCo, 255 - inCo, uinCo);
+				if (Driver.toggle == 0)
+					color = new Color(vinCo, 255 - inCo, uinCo);
 				else
-					color = (Driver.toggle == 1) ? new Color(uinCo, 255, 255) : new Color(255, 255 - vinCo, 255 - vinCo);
+					color = (Driver.toggle == 1) ? new Color(255 - uinCo,
+							255 - uinCo, 255) : new Color(255, 255 - vinCo,
+							255 - vinCo);
 				g.setColor(color);
 				g.drawRect(i * Driver.scale, j * Driver.scale, (i + 1)
 						* Driver.scale, (j + 1) * Driver.scale);
