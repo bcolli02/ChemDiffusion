@@ -4,7 +4,7 @@ import javax.swing.JOptionPane;
 
 public class Driver {
 
-	public static boolean paused = false, random = false;
+	public static boolean paused = false, random = false, concentric = false;
 	public static int seed = 0, toggle = 0, steps = 15000, scale = 2;
 	public static double ru = 0.16, rv = 0.08, f = 0.02, k = 0.055;
 

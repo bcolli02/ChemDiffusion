@@ -63,16 +63,18 @@ public class Grids {
 			for (int j = 0; j < height; j++) {
 				double di = i - width * 0.5;
 				double dj = j - height * 0.5;
-				double cos1 = (Math.cos((width / 2 + di) / 8) + 1) * 0.5;
-				double cos2 = (Math.cos((height / 2 + dj) / 8) + 1) * 0.5;
-				double expcoco = cos1 * cos2;
+				double sq = Math.sqrt(di * di + dj * dj);
+				double cos1 = (Math.cos((width / 2 - sq) / 8) + 1) * 0.5;
+				double cos2 = (Math.cos((width / 2 + di) / 8) + 1) * 0.5;
+				double cos3 = (Math.cos((height / 2 + dj) / 8) + 1) * 0.5;
+				double co2 = (Driver.concentric) ? cos1 * cos1 : cos2 * cos3;
 
 				double mid = (rand.nextInt(width * height / 8) - 1 <= 0) ? 1.0
 						: 0.0;
 
 				grid1[i][j] = new Chemical(new URate(), 1.0);
 				grid2[i][j] = new Chemical(new VRate(), Driver.random ? mid
-						: expcoco);
+						: co2);
 			}
 		}
 	}
@@ -99,8 +101,11 @@ public class Grids {
 			for (int j = 0; j < height; j++) {
 				double uComp = uGrid[i][j].getComposition();
 				double vComp = vGrid[i][j].getComposition();
-				uConcs[(int) (uComp * 100)]++;
-				vConcs[(int) (vComp * 100)]++;
+				try {
+					uConcs[(int) (uComp * 100)]++;
+					vConcs[(int) (vComp * 100)]++;
+				} catch (Exception e) {
+				}
 				uSum += uComp;
 				vSum += vComp;
 			}

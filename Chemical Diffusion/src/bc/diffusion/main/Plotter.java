@@ -109,6 +109,7 @@ public class Plotter extends JPanel {
 						(int) (lift - (h1 - 0.5)));
 			}
 		}
+		
 		if (Driver.toggle == 2) {
 			for (int i = 0; i < 101; i++) {
 				double a = (double) (height * width);

@@ -117,6 +117,7 @@ public class InputPanel extends JPanel implements ActionListener {
 			k.setText(Double.toString(Driver.k));
 			grids.reset();
 		} else if ("start".equals(e.getActionCommand())) {
+			Driver.concentric = !Driver.concentric;
 			Driver.ru = Double.parseDouble(uRate.getText());
 			uRate.setText(Double.toString(Driver.ru));
 			Driver.rv = Double.parseDouble(vRate.getText());
