@@ -70,7 +70,7 @@ public class Plotter extends JPanel {
 		double[] vGridData = grids.getGridData(false);
 		int[] uConcs = grids.getConcentrations(true);
 		int[] vConcs = grids.getConcentrations(false);
-
+		
 		for (int i = 0; i < count; i++) {
 			uC = uGridData[i];
 			vC = vGridData[i];
@@ -82,8 +82,8 @@ public class Plotter extends JPanel {
 
 				g.setColor(Color.DARK_GRAY);
 				g.setFont(new Font("Arial", Font.BOLD, 16));
-				g.drawString("Average Chemical Concentrations", width / 2 + 75,
-						(int) (lift - maxHeight - 25));
+				g.drawString("Average Chemical Concentrations", width / 2 + 75, (int) (lift - maxHeight - 25));
+				
 				g.setColor(Color.blue);
 				g.drawLine(i * length + start, (int) h1, (i + 1) * length
 						+ start - 1, (int) h2);
@@ -125,8 +125,7 @@ public class Plotter extends JPanel {
 						(int) (lift - (h1 - 0.5)));
 			}
 		}
-
-		g.setFont(new Font("Arial", Font.BOLD, 16));
+		
 		g.setFont(new Font("Arial", Font.BOLD, 16));
 		g.setColor(Color.black);
 		g.drawString(df.format(uC), (int) (lift + 215), (int) (lift + 25));
