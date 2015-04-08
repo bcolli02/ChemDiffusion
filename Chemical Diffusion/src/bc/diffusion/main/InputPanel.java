@@ -11,6 +11,13 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * This class is used for input components of the simulation, like changing the diffusion rates of U and V
+ * chemicals and the feed/kill rates of the equations for the chemicals.
+ * 
+ * @author Brennan Collins
+ *
+ */
 public class InputPanel extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -107,26 +114,38 @@ public class InputPanel extends JPanel implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		if ("random".equals(e.getActionCommand())) {
 			Driver.random = !Driver.random;
+			
 			Driver.ru = Double.parseDouble(uRate.getText());
 			uRate.setText(Double.toString(Driver.ru));
+			
 			Driver.rv = Double.parseDouble(vRate.getText());
 			vRate.setText(Double.toString(Driver.rv));
+			
 			Driver.f = Double.parseDouble(f.getText());
 			f.setText(Double.toString(Driver.f));
+			
 			Driver.k = Double.parseDouble(k.getText());
 			k.setText(Double.toString(Driver.k));
+			
 			grids.reset();
+		
 		} else if ("start".equals(e.getActionCommand())) {
 			Driver.concentric = !Driver.concentric;
+			
 			Driver.ru = Double.parseDouble(uRate.getText());
 			uRate.setText(Double.toString(Driver.ru));
+			
 			Driver.rv = Double.parseDouble(vRate.getText());
 			vRate.setText(Double.toString(Driver.rv));
+			
 			Driver.f = Double.parseDouble(f.getText());
 			f.setText(Double.toString(Driver.f));
+			
 			Driver.k = Double.parseDouble(k.getText());
 			k.setText(Double.toString(Driver.k));
+			
 			grids.reset();
+			
 		} else if ("pause".equals(e.getActionCommand())) {
 			Driver.paused = !Driver.paused;
 		} else if ("toggle".equals(e.getActionCommand())) {

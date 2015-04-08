@@ -14,6 +14,13 @@ import javax.swing.JPanel;
 import javax.swing.JSplitPane;
 import javax.swing.Timer;
 
+/**
+ * This class is the entire GUI for the simulation, creating different panes for the inputs, the data plotter, and
+ * the visualization GUI.
+ * 
+ * @author Brennan Collins
+ *
+ */
 public class DiffusionGUI extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
@@ -34,8 +41,8 @@ public class DiffusionGUI extends JFrame implements ActionListener {
 		topPanel.setLayout(new BorderLayout());
 		getContentPane().add(topPanel);
 
-		screenSize.width = 800;
-		screenSize.height = 400;
+		screenSize.width = 1200;
+		screenSize.height = 600;
 
 		int panelWidth = screenSize.width / 2;
 		int panelHeight = screenSize.height;
@@ -67,6 +74,8 @@ public class DiffusionGUI extends JFrame implements ActionListener {
 	}
 
 	public void setFrameComponents(JPanel top, int panelWidth, int panelHeight) {
+		// Split the GUI into two parts: the top part contains the visualization of the simulation and data plotter
+		// and the bottom is an input GUI for changing different aspects of the simulation
 		splitV = new JSplitPane(JSplitPane.VERTICAL_SPLIT);
 		splitV.setDividerLocation(panelHeight);
 		splitV.add(chemPanel);

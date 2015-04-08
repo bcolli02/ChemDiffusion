@@ -2,6 +2,12 @@ package bc.diffusion.equations;
 
 import bc.diffusion.main.Driver;
 
+/**
+ * This class represents the rate at which any U chemical will change at each time step.
+ * 
+ * @author Brennan Collins
+ *
+ */
 public class URate extends Rate {
 
 	@Override

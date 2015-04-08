@@ -74,6 +74,7 @@ public class Plotter extends JPanel {
 		for (int i = 0; i < count; i++) {
 			uC = uGridData[i];
 			vC = vGridData[i];
+			
 			if (Driver.toggle == 0) {
 				double h1 = lift - (uGridData[i] * maxHeight), h2 = lift
 						- (uGridData[i + 1] * maxHeight), h3 = lift
